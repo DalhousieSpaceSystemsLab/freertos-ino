@@ -1,12 +1,14 @@
-#include <Arduino_FreeRTOS.h>
+// #include <Arduino_FreeRTOS.h> // For Arduino Nano
+#include <STM32FreeRTOS.h>
 
 void TaskBlink(void *params);
 
 void setup() {
   // put your setup code here, to run once:
-  pinMode(13, OUTPUT);
+  pinMode(LED_BUILTIN, OUTPUT);
   
   xTaskCreate(TaskBlink, "Blink", 128, NULL, 2, NULL);
+  vTaskStartScheduler();
 }
 
 void loop() {
@@ -16,9 +18,9 @@ void loop() {
 
 void TaskBlink(void *params) {
   for(;;) {
-    digitalWrite(13, HIGH);
-    vTaskDelay(1000 / portTICK_PERIOD_MS);
-    digitalWrite(13, LOW);
-    vTaskDelay(1000 / portTICK_PERIOD_MS); 
+    digitalWrite(LED_BUILTIN, HIGH);
+    vTaskDelay(250 / portTICK_PERIOD_MS);
+    digitalWrite(LED_BUILTIN, LOW);
+    vTaskDelay(250 / portTICK_PERIOD_MS); 
   }
 }
